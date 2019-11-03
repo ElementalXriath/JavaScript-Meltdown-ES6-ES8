@@ -15,11 +15,43 @@ scores= [0,0];
 roundScore = 0;
 activePlayer = 1;
 
-dice = Math.floor(Math.random() * 6) + 1;
-
-// Using Type Coricien using 1 or 0 of the html class name as part of the query selector
-document.querySelector('#current-' + activePlayer).textContent = dice;
-
-var x = document.querySelector('#score-0').textContent;
-
+//Hide the Dice on Load
 document.querySelector('.dice').style.display = 'none';
+
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
+
+//When uou click roll dive -
+document.querySelector('.btn-roll').addEventListener('click', function(){
+
+    //Random Number
+    var dice = Math.floor(Math.random() * 6) + 1;
+
+    //Display the Res
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display ='block';
+    diceDOM.src = 'dice-' + dice + '.png';
+
+    //Update the score round if not a 1
+
+    if ( dice !== 1) {
+        //add score
+        roundScore += dice;
+        document.querySelector('#current-' + activePlayer).textContent= roundScore;
+    } else { 
+        //next player
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        roundScore = 0;
+
+        //Reset Score
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+
+        //Toggle Active Player CSS
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+    } 
+});
+
